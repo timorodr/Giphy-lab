@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import {useState} from 'react'
+import { useEffect } from 'react';
+import Button from './components/Button.js'
+import Gifs from './components/Gifs'
+
 import './App.css';
 
 function App() {
+
+  const [giph, setGiph] = useState(null)
+
+  const getGiph = async () => {
+
+    const apiKey = "5ag9w1a5ImtywEKTQw71FzOohPKG3Q9R"
+    const url =`https://api.giphy.com/v1/gifs/random?api_key=${apiKey}&tag=&rating=g`
+
+    const response = await fetch(url)
+
+    const data = await response.json()
+
+    setGiph(data)
+
+  }
+
+  useEffect(() => {
+    console.log("This is the useEffect bro")
+    // getGiph(null)
+  }, [])
+
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button handleSubmitFromApp={getGiph}/>
+      <Gifs giph={giph}/>
+
     </div>
   );
 }
